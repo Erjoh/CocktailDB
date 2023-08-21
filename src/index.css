@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,136 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.container{
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.row{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.col-3{
+  width: 25%;
+}
+
+.col-4{
+  width: 33.33%;
+  margin: 15px 0;
+}
+
+.col-4 a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 15px;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+}
+
+.info-link{
+  text-decoration: none;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.header a{
+  text-decoration: none;
+}
+
+nav{
+  display: flex;
+  gap: 30px;
+}
+
+.searchInput{
+  padding: 5px 10px;
+}
+
+.searchBtn{
+  padding: 5px 10px;
+}
+
+.searchArea{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card{
+  border-radius: 5px;
+  padding: 30px;
+}
+
+.box{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+  align-items: center;
+  color: white;
+}
+
+.footer{
+  padding: 30px;
+}
+
+.footer p{
+  display: flex;
+  flex-direction: column;
+}
+
+.cocktailWrapper{
+  display: flex;
+  padding: 30px;
+}
+
+.tailWrapper{
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 30px 15px 15px;
+  border-radius: 10px;
+  color: white;
+}
+
+.ingridients{
+  display: flex;
+}
+
+.ingridients a{
+  display: flex;
+  flex-direction: column;
+}
+
+.backdiv{
+  padding: 30px;
+}
+
+.backdiv button{
+  padding: 5px 10px;
+}
+
+.cardWrapper{
+  background: gray;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
 }
