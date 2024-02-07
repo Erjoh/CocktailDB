@@ -1,28 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,} from 'react';
 import Layout from "../components/Layout";
-import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
 import ProductList from "../components/ProductList";
+import {useDispatch, useSelector,} from "react-redux";
+import {getCocktails} from "../redux/store/cocktailSlice";
+import Loading from "./LoadingPage";
+import NotFound from "./NotFound";
 
 const HomePage = () => {
-    const navigate = useNavigate()
-    const [search, setSearch] = useState('')
-    const [cocktails, setCocktails] = useState([])
-    useEffect(() => {
-        axios('https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic')
-            .then(res => setCocktails(res.data.drinks))
-    }, [search])
+    const dispatch = useDispatch()
+    const cocktails = useSelector(state => state.cocktails.cocktails)
 
-    const handleSearch = () => {
-        navigate(`/search/${search}`)
+    useEffect(() => {
+        dispatch(getCocktails());
+    }, [dispatch])
+
+    if (cocktails === null) {
+        return <NotFound/>
     }
 
     return (
         <Layout>
-            <div className={'searchArea'}>
-                <input className={'searchInput'} onChange={(e) => setSearch(e.target.value)} placeholder={'name of cocktail'} type={'text'}/>
-                <button className={'searchBtn'} onClick={handleSearch}>Search</button>
-            </div>
             <div className={'container'}>
                 <ProductList cocktails={cocktails}/>
             </div>

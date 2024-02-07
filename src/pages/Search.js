@@ -1,29 +1,48 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect,} from 'react';
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Card from "../components/Card";
+import Layout from "../components/Layout";
+import {useDispatch, useSelector} from "react-redux";
+import {getSearch} from "../redux/store/cocktailSlice";
+import NotFound from "./NotFound";
 
 const Search = () => {
     const {name} = useParams()
-    const [data, setData] = useState()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const cocktails = useSelector(state => state.cocktails.search)
+
     useEffect(() => {
-        axios(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
-            .then(response => {
-                setData(response.data)
-            })
-    }, [name])
+        dispatch(getSearch(name));
+    }, [dispatch, name])
+
+    if (cocktails === null) {
+        return <NotFound/>
+    }
 
     return (
-        <div>
-            <button onClick={() => navigate('/')}>Back</button>
-            {
-                data?.drinks.map((cocktail, index) => (
-                    <Card cocktail={cocktail} key={cocktail.idDrink}/>
-                ))
-            }
-
-        </div>
+        <Layout>
+            <div>
+                <div className="container">
+                    <div className="backDiv">
+                        <button onClick={() => navigate('/')}>Back</button>
+                    </div>
+                    <div className={'row'}>
+                        {
+                            cocktails.map(cocktail => {
+                                return (
+                                    <div className={'col-4'} key={cocktail.idDrink}>
+                                        <Link to={`/info/${cocktail.idDrink}`} className={'info-link'}>
+                                            <Card cocktail={cocktail} />
+                                        </Link>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+        </Layout>
     )
 
 };

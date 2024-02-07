@@ -1,68 +1,92 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
+import React, {useEffect,} from 'react';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import ProductList from "../components/ProductList";
+import Layout from "../components/Layout";
+import {useDispatch, useSelector} from "react-redux";
+import {getLookup} from "../redux/store/cocktailSlice";
+import NotFound from "./NotFound";
 
 const CocktailInfo = () => {
-    const [cocktail , setCocktail] = useState({})
+    const dispatch = useDispatch()
     const {id} = useParams()
     const navigate = useNavigate()
+    const cocktail = useSelector(state => state.cocktails.lookup)
 
     useEffect(() => {
-        axios(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-            .then(res => setCocktail(res.data.drinks[0]))
-    }, [id])
+        dispatch(getLookup(id))
+    }, [dispatch, id])
+
+
     return (
-        <div>
-            <div className={'backdiv'}>
-                <button onClick={() => navigate('/')}>Back</button>
-            </div>
-            <div className={'cocktailWrapper'}>
-                <div className={'tailWrapper'}>
-                    <h3>{cocktail.strDrink}</h3>
-                    <img width={'300px'} src={cocktail.strDrinkThumb} alt={cocktail.strDrink}/>
-                    <p>{cocktail.strInstructions}</p>
+        <Layout>
+            <div className="container">
+                <div className={'backDiv'}>
+                    <button onClick={() => navigate('/')}>Back</button>
                 </div>
-                <div className={'row'}>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient1}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient1}.png`} alt=""/>
-                            <p>{cocktail.strIngredient1}</p>
-                        </Link>
+                <div className={'cocktailWrapper'}>
+                    <div className={'tailWrapper'}>
+                        <h3>{cocktail.strDrink}</h3>
+                        <div style={{display: 'flex', justifyContent: "space-between", padding: '30px', gap: '30px'}}>
+                            <img width={'300px'} src={cocktail.strDrinkThumb} alt={cocktail.strDrink}/>
+                            <div style={{display: 'flex', flexDirection: "column", gap: '30px', alignItems: 'center'}}>
+                                <h4 style={{fontSize: '30px', color: '#ffffff'}}>Instructions</h4>
+                                <p>{cocktail.strInstructions}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient2}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient2}.png`} alt=""/>
-                            <p>{cocktail.strIngredient2}</p>
-                        </Link>
-                    </div>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient3}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient3}.png`} alt=""/>
-                            <p>{cocktail.strIngredient3}</p>
-                        </Link>
-                    </div>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient4}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient4}.png`} alt=""/>
-                            <p>{cocktail.strIngredient4}</p>
-                        </Link>
-                    </div>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient5}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient5}.png`} alt=""/>
-                            <p>{cocktail.strIngredient5}</p>
-                        </Link>
-                    </div>
-                    <div className={'col-4'}>
-                        <Link to={`/ingredient/${cocktail.Ingredient6}`}>
-                            <img width={'200px'} src={`http://www.themealdb.com/images/ingredients/${cocktail.strIngredient6}.png`} alt=""/>
-                            <p>{cocktail.strIngredient6}</p>
-                        </Link>
+                    <h3>Ingredient List</h3>
+                    <div className={'row'}>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient1}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient1}.png`} alt=""/>
+                                    <p>{cocktail.strIngredient1}</p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient2}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient2}.png`} alt=""/>
+                                <p>{cocktail.strIngredient2}</p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient3}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient3}.png`} alt=""/>
+                                <p>{cocktail.strIngredient3}</p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient4}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient4}.png`} alt=""/>
+                                <p>{cocktail.strIngredient4}</p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient5}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient5}.png`} alt=""/>
+                                <p>{cocktail.strIngredient5}</p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={'col-4'}>
+                            <Link to={`/ingredient/${cocktail.strIngredient6}`}>
+                                <div className={'ingredientWrapper'}>
+                                    <img width={'200px'} src={`https://www.themealdb.com/images/ingredients/${cocktail.strIngredient6}.png`} alt=""/>
+                                <p>{cocktail.strIngredient6}</p>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     );
 };
 
